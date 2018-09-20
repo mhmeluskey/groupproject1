@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/go_localstyle.css">
 </head>
 
-<body>
+<body id="ingredient-search-page">
     <!-- Navbar -->
     <div class="pos-f-t">
         <div class="collapse" id="navbarToggleExternalContent">
@@ -55,19 +55,22 @@
             </button>
         </nav>
     </div>
-    <div id = "form" class = "container">
-            <div class="page locall_page_full form-row align-items-center" id="page1">
-                   
-    <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Enter Food</label>
-            <input id = "food" type="food" class="form-control">
+    <div id="ingredient-search-body" class ="container">
+        <form>
+            <div class="form-group row">
+                <label for="ingredient-search-input" class="col-sm-3 col-form-label">Enter Ingredients:</label>
+                <div class="col-sm-6">
+                    <input id="ingredient-search-input" type="food" class="form-control">
+                </div>
+                <div class="col-auto">
+                    <button id="get-recipes" type="submit" class="btn btn-primary">Get Recipes</button>
+                </div>
+            </div>
+        </form>
+        <div class="row page locall_page_full form-row align-items-center" id="page1">        
         </div>
-        <button id = "get-recipes" type="submit" class="btn btn-primary">Get Recipes</button>
-    </form>
-</div>
-</div>
-</div>
+    </div>
+    <section id="ingredient-search-results" class="container"></section>
 
     <!-- Custom JavaScript -->
     <script src="assets/js/app.js"></script>

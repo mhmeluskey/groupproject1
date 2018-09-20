@@ -1,6 +1,33 @@
+function buildRecipeCard(responseObj) {
+    var recipeContainer = $('<div class="col-sm-6 col-md-4 col-lg-3"><div class="ingredient-card">');
+    var recipeCard = $('<div class="ingredient-card">');
+    recipeContainer.append(recipeCard);
+    var recipeContent = '<img class="mx-auto img-fluid d-block" src="'+responseObj.image+'"><h3>'+responseObj.title+'</h3>'
+    recipeCard.append(recipeContent);
+
+    return recipeContainer;
+
+}
+
+function displayRecipes(response) {
+    var display = $('<div class="row">');
+    for (var i=0; i<response.length; i++) {
+        var singleRecipe = buildRecipeCard(response[i]);
+        console.log(singleRecipe);
+        display.append(singleRecipe);
+    }
+    console.log(display);
+    $("#ingredient-search-results").append(display);
+}
+
+
+
+
+
 $("#get-recipes").on("click", function (event){
     console.log("ive been clicked");
-    var foodInput = $("#food").val().trim();
+    $("#ingredient-search-results").empty();
+    var foodInput = $("#ingredient-search-input").val().trim();
     console.log(foodInput);
     //takes away button default behavior 
     event.preventDefault();
@@ -20,9 +47,11 @@ $.ajax({
 }).then(function(response){
     console.log("hello");
     console.log(response);
+    displayRecipes(response);
 }).catch(function(error){
     console.log(error);
 });
 
 
 });
+
