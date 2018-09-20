@@ -65,10 +65,10 @@ p {
     margin-left: 20px;
 }
 
-/* Page 1: Main */
+/* Page 1: Main
 #page1 {
     justify-content: center;
-}
+} */
 
 .jumbotron {
     background: rgba(255, 255, 255, 0);
@@ -109,7 +109,6 @@ p {
     align-items            : center;
     -webkit-justify-content: center;
     justify-content        : center;
-    
     margin-top: 3em;
 }
 
@@ -195,8 +194,8 @@ p {
     margin-bottom: 4%;
 }
 
-form {
+/* form {
     width: 200px;
     position: absolute;
     float: center;
-}
+} */
