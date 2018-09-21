@@ -209,3 +209,7 @@ Center vertically
 .ingredient-card {
     background-color: rgba(0,0,0,0.25);
 }
+
+.modal-body {
+    font-size: 16px;
+}
