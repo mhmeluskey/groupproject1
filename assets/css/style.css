@@ -1,165 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo|Open+Sans');
+
 body {
-    background             : url("../images/background.bmp") no-repeat center center fixed;
+    background: url("../images/kitchen.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size   : cover;
     -o-background-size     : cover;
     background-size        : cover;
-    background-color       : #333;
-
-    font-family: "Arvo", sans-serif;
-    font-size  : 20px;
-    text-align : center;
-    
+    background-color       : #f7f5f1;
+    font-size  : 1em;
     width  : 100%;
-    margin : 0;
-    padding: 0;
-}
-h1 {
-    font-family: 'Trebuchet MS', sans-serif;
-    font-size  : 4em;
-    font-weight: normal;
-    text-align : center;
 
-    margin : 1% 0;
-    padding: 0;
-
-    -webkit-animation-name    : rainbow;
-    -webkit-animation-duration: 6s;
-    animation-name            : rainbow;
-    animation-duration        : 6s;
-    animation-iteration-count : infinite;
+    font-family: 'Open Sans', sans-serif;
+    color: #545756;
 }
 
-@keyframes rainbow {
-    0%   { color: #97E649; }
-    20%  { color: #35fec8; }
-    36%  { color: #35a9fe; }
-    50%  { color: #e135fe; }
-    70%  { color: #FE6C52; }
-    85%  { color: #F4EE44; }
-    100% { color: #97E649; }
-} 
-
-h2, h3 {
-    font-weight: bold;
-    text-align : center;
-}
-
-h2 {
-    font-size: 3em;
-}
-
-h3 {
-    font-size: 1.5em;
+h1, h2, h3, h4, h5, h6, .ew-nav {
+    font-family: "Arvo", sans-serif;    
 }
 
 p {
-    font-size    : 1.2em;
-    font-weight  : bold;
-    margin-bottom: 30px;
-    color: black;
+    color: #878787;
 }
 
-/* Page 0: Modal */
-.locall_menuItems button {
-    margin-left: 20px;
+#ingredient-search-results h4{
+    color: #878787;
+    font-size: 1.15em;
 }
 
-/* Page 1: Main
-#page1 {
-    justify-content: center;
-} */
-
-.jumbotron {
-    background: rgba(255, 255, 255, 0);
+.recipe-card {
+    background-color: rgba(247, 245, 241, .95);
+    border-radius: 4px;
 }
 
-.jumbotron h1 {
-    font-size: 5em;
+.recipe-card img {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
-.locall_page_full {
-    background: rgba(255, 255, 255, 0);
-
-/* Center vertically */
-    min-height    : 100%;   /* Fallback for browsers do not support vh unit */
-    min-height    : 100vh;  /* These two lines are counted as one           */
-    display       : flex;
-    flex-direction: column;
+.ew-nav {
+    background-color: #2B93D9;
+    color: #f7f5f1;
 }
 
-.locall_page_full h2 {
-    margin-bottom: 2%;
+#ingredient-search-section {
+    background-color: rgba(247, 245, 241, .75);
+    padding: 100px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    border-radius: 10px;
 }
 
-.locall_page_full a {
-    font-size: 2em;
+.eat{
+    color: #2B93D9;
+}
 
-    padding: 10px 30px;
+.work{
+    color: #aa310c;
+}
+
+.modal-dialog {
+    max-width: 850px;
+}
+
+.ingredients-list {
+    margin-top: 24px;
+}
+
+.ingredients-list p {
+    margin-bottom: 8px;
 }
 
 
-/* Page 2: Go Philly! */
-.locall_flex_container {
-    display                : -webkit-flex;
-    display                : flex;
-    -webkit-flex-direction : row; /* works with row or column */
-    flex-direction         : row;
-    -webkit-align-items    : center;
-    align-items            : center;
-    -webkit-justify-content: center;
-    justify-content        : center;
-    margin-top: 3em;
-}
 
-.button_events {
-    font-size : 20px;
-    text-align: center;
 
-    margin-top: 2em;
-}
+
+
+/* Nebi Code */
+
 .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    color: #f7f5f1;
+    background-color: #2B93D9;
+    border-color: #2B93D9;
 }
+
 .btn-primary:hover {
-    color: #111;
     background-color: #aa310c;
-    border-color: #f7f5f1;
+    border-color: #aa310c;
 }
+
 .btn-warning {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-.btn-warning:hover {
-    color: #111;
+    color: #f7f5f1;
     background-color: #aa310c;
-    border-color: #f7f5f1;
-}
-.btn-secondary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-.btn-secondary:hover {
-    color: #111;
-    background-color: #aa310c;
-    border-color: #f7f5f1;
-}
-.btn-success {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-
-/* Page 3: Our Developer Team */
-.carousel {
-    background: rgba(255, 255, 255, 0);
-    width     : 800px;
-    margin    : 1% auto 0 auto;
+    border-color: #aa310c;
 }
 
 .carousel-control-prev-icon {
@@ -185,17 +117,3 @@ p {
     height       : 200px;
     margin-bottom: 5%;
 }
-
-#page3 h2 {
-    font-size: 50px;
-}
-
-#page3 h3 {
-    margin-bottom: 4%;
-}
-
-/* form {
-    width: 200px;
-    position: absolute;
-    float: center;
-} */
