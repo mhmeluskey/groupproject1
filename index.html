@@ -28,7 +28,7 @@
     <!-- Navbar -->
     <div class="pos-f-t">
         <nav class="navbar navbar-expand-lg navbar-dark ew-nav">
-            <a class="navbar-brand" href="#">Eat it On - Work it Off!</a>
+            <a class="navbar-brand" href="#">Make it - or - Order it!</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,10 +37,10 @@
             <div class="collapse navbar-collapse" id="ew-Navigation">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about_us.html">About Us</a>
+                        <a class="nav-link" href="#">About Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sign Up</a>
@@ -57,16 +57,21 @@
     <div id="ingredient-search-section" class="container">
         <div class="row">
             <div class="col-12 form-container">
-                <h1 class="text-center"><span class="eat">Eat it On</span> - or - <span class="work">Work it Off</span></h1>
-                <h5 class="text-center px-5 pb-5">Search for a meal and see how long you'll have to exercise to burn it off.</h5>
+                <h1 class="text-center"><span class="eat">Make it</span> - or - <span class="work">Order it!</span></h1>
+                <h5 class="text-center px-5 pb-5">Hungry? That's cool.</h5>
+                <h6>Let us know what you feel like eating and we'll show you some great recipes or, if you're feeling lazy, we'll show you some nearby restaurants that might be able to help you out:</h6>
                 <form>
                     <div class="form-group row">
-                        <label for="ingredient-search-input" class="col-sm-3 col-form-label">Enter Ingredients:</label>
-                        <div class="col-sm-6">
-                            <input id="ingredient-search-input" type="food" class="form-control">
+                        <label for="ingredient-search-input" class="col-sm-2 col-form-label">What do you feel like having?</label>
+                        <div class="col-sm-4">
+                            <input id="ingredient-search-input" type="food" class="form-control" required>
+                        </div>
+                        <label for="ingredient-search-input" class="col-sm-2 col-form-label">Zip Code:</label>
+                        <div class="col-sm-4">
+                            <input id="zip-input" type="food" class="form-control" required>
                         </div>
                         <div class="col-auto">
-                            <button id="get-recipes" type="submit" class="btn btn-primary">Get Recipes</button>
+                            <button id="get-recipes" type="submit" class="btn btn-primary">Gimme Options</button>
                         </div>
                     </div>
                 </form>

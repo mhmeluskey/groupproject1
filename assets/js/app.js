@@ -116,10 +116,14 @@ function instructionsBuild(responseArr) {
 $("#get-recipes").on("click", function (event){
     $("#ingredient-search-results").empty();
     var foodInput = $("#ingredient-search-input").val().trim();
+    var location = $("#zip-input").val().trim();
+    
     //takes away button default behavior 
     event.preventDefault();
+    
     //empty out the value after clicking
-    $("#ingredient-search-input").on("#get-recipes").val("");
+    $("#ingredient-search-input").val("");
+    $("#zip-input").val("");
 
     var queryURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + foodInput + "&limitLicense=false&number=12&ranking=1";
 
