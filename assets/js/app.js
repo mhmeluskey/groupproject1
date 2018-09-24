@@ -3,11 +3,28 @@
 var map;
 var userPos;
 var zipPos;
-var currentLocation
+var currentLocation;
+var firstCarouselItemSet = false;
 
 // ====== FUNCTIONS ====== //
 
 // Builds recipe card for initial search results
+function buildLocationCard(responseObj) {
+    console.log(responseObj);
+
+    var carouselItem;
+
+    if (firstCarouselItemSet) {
+        carouselItem = $('<div class="carousel-item">')
+    } else {
+        carouselItem = $('<div class="carousel-item active">');
+    }
+
+    carouselItem.append('<h1>'+responseObj.name+'</h1>');
+
+    $("#locations-carousel").append(carouselItem);
+}
+
 function buildRecipeCard(responseObj) {
 
     var recipeContainer = $('<div class="col-sm-6 col-md-4 col-lg-3 mb-lg-5 mb-3">');
@@ -210,7 +227,6 @@ $(document).ready(function () {
                 $("#ingredient-search-results").empty();
             }
 
-
             // If the userPos isn't set, get the Latitude and Longitude coordinates from the Zip Input
             if (zipPos) {
 
@@ -232,24 +248,57 @@ $(document).ready(function () {
                         lng: response.results[0].geometry.location.lng
                     }
 
-                    console.log(userPos);
+                    map.setCenter(userPos);
+                    map.setZoom(14);
+
+                    var infoWindow = new google.maps.InfoWindow();
+
+                    var service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch({
+                        location: userPos,
+                        keyword: foodInput,
+                        radius: 1000,
+                        type: "restaurant"
+                    }, callback);
+
+                    function callback(results, status) {
+                        console.log(results);
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (var i = 0; i < results.length; i++) {
+                            createMarker(results[i]);
+                            buildLocationCard(results[i]);
+                            console.log(results[i]);
+                        }
+                        }
+                    }
+                
+                    function createMarker(place) {
+                        var placeLoc = place.geometry.location;
+                        var marker = new google.maps.Marker({ map: map, position: placeLoc});
+
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infoWindow.setContent(place.name);
+                            infoWindow.open(map, this);
+                        });
+                    }
 
 
                 }).catch(function (error) {
                     console.log(error);
                 });
 
-            }
+            } else if (userPos) {
 
-
-            if (userPos) {
-                console.log("here is: " + userPos.lat);
-
+                // Set Center and Zoom Levels to location input
                 map.setCenter(userPos);
                 map.setZoom(14);
 
+
+                // Initialize infowindows for Places
                 var infoWindow = new google.maps.InfoWindow();
 
+
+                // Create Places Services Layer with user's position and food keyword, place markers on response
                 var service = new google.maps.places.PlacesService(map);
                 service.nearbySearch({
                     location: userPos,
@@ -258,6 +307,7 @@ $(document).ready(function () {
                     type: "restaurant"
                 }, callback);
 
+                
                 function callback(results, status) {
                     console.log(results);
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -276,7 +326,6 @@ $(document).ready(function () {
                         infoWindow.setContent(place.name);
                         infoWindow.open(map, this);
                     });
-        
                 }
 
             }
@@ -304,7 +353,9 @@ $(document).ready(function () {
                     headers: { "Accept": 'application/json', "X-Mashape-Key": "ZFmvhX3Np4mshkom23Cm7BKRqwYFp1LChSXjsnKEoMpsW5hD8n" }
 
                 }).then(function (response) {
+
                     buildRecipeModal(response);
+
                 });
 
             }).catch(function (error) {
