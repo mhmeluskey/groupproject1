@@ -14,6 +14,12 @@ body {
     color: #545756;
 }
 
+#map-canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #2B93D9;
+}
+
 h1, h2, h3, h4, h5, h6, .ew-nav {
     font-family: "Arvo", sans-serif;    
 }
@@ -58,6 +64,50 @@ p {
     color: #aa310c;
 }
 
+.main-input {
+    margin-bottom: 3rem;
+}
+
+.deliveryMode-container {
+    background-color: #aa310c;
+}
+
+#user-zip {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+.zipSearch-hide {
+    display: none;
+}
+
+.unchecked::before {
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "";
+    padding-right: 26px;
+}
+
+.checked::before {
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f00c";
+    padding-right: 10px;
+}
+
+footer {
+    background-color: #aa310c;
+}
+
+footer p {
+    color: #f7f5f1;
+    margin-bottom: 0;
+    padding: 6px;
+}
+
+/* Modal Styling */
+
 .modal-dialog {
     max-width: 850px;
 }
@@ -69,6 +119,8 @@ p {
 .ingredients-list p {
     margin-bottom: 8px;
 }
+
+
 
 
 

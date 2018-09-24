@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="Geoff, Megan, Nebiyou, Ian">
-    <style>
-        body {
-            background: url("assets/images/kitchen.png") no-repeat center center fixed;
-        }
-    </style>
-
     <title>Eat it on - Work it off</title>
 
     <!-- Bootstrap -->
@@ -27,54 +21,69 @@
 <body>
     <!-- Navbar -->
     <div class="pos-f-t">
-        <nav class="navbar navbar-expand-lg navbar-dark ew-nav">
-            <a class="navbar-brand" href="#">Make it - or - Order it!</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="ew-Navigation">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                </ul>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark ew-nav">
+            <div class="container">
+                <a class="navbar-brand" href="#">Make it - or - Order it!</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="ew-Navigation">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about-us">About Us</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>
 
     <!-- Main Body -->
+    <!-- Main Search Section -->
     <div id="ingredient-search-section" class="container">
         <div class="row">
-            <div class="col-12 form-container">
-                <h1 class="text-center"><span class="eat">Make it</span> - or - <span class="work">Order it!</span></h1>
-                <h5 class="text-center px-5 pb-5">Hungry? That's cool.</h5>
-                <h6>Let us know what you feel like eating and we'll show you some great recipes or, if you're feeling lazy, we'll show you some nearby restaurants that might be able to help you out:</h6>
+            <div class="col-6">
+                <h5 class="text-center px-5">Hungry? That's cool.</h5>
+                <h1 class="text-center mb-3"><span class="eat">Make it</span> - or - <span class="work">Order it!</span></h1>
+
+                <!-- Text/ -->
                 <form>
-                    <div class="form-group row">
-                        <label for="ingredient-search-input" class="col-sm-2 col-form-label">What do you feel like having?</label>
-                        <div class="col-sm-4">
-                            <input id="ingredient-search-input" type="food" class="form-control" required>
+                    <div class="form-group">
+                        <div class="main-input input-group">
+                            <div class="input-group-addon deliveryMode-container">
+                                <div class="input-group-text">
+                                    <input id="deliveryMode" type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                            </div>
+                            <input id="ingredient-search-input" type="text" class="form-control" placeholder="Pizza, Tacos, etc." aria-label="Desired meal, cuisine, ingredient">
+                            <div class="input-group-btn">
+                                <button id="get-recipes" type="button" class="btn btn-warning">Gimme Options</button>
+                                <button type="submit" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a id="currentLocation" class="dropdown-item unchecked" href="#">Use Current Location</a>
+                                    <a id="zipCode" class="dropdown-item unchecked" href="#">Zip Code</a>
+                                </div>
+                            </div>
                         </div>
-                        <label for="ingredient-search-input" class="col-sm-2 col-form-label">Zip Code:</label>
-                        <div class="col-sm-4">
-                            <input id="zip-input" type="food" class="form-control" required>
-                        </div>
-                        <div class="col-auto">
-                            <button id="get-recipes" type="submit" class="btn btn-primary">Gimme Options</button>
+                        <div class="zipSearch-hide input-group mb-5">
+                            <input id="user-zip" type="text" class="form-control" aria-label="Zip Code" placeholder="Zip Code" aria-describedby="basic-addon1">
                         </div>
                     </div>
                 </form>
+
+                <h6 class="mb-3">Let us know what you feel like eating and we'll show you some great recipes.</h6>
+                <h6 class="mb-3">Or, if you're not in the mood to cook, we'll show you some nearby restaurants that might be able to help you out.</h6>
+                <h6>Use the Lazy Mode checkbox, to get super simple recipes and restaurant's with delivery options.</h6>
+            </div>
+            <div class="col-md-6">
+                <div id="map-canvas"></div>
             </div>
         </div>
         <div class="row page locall_page_full form-row align-items-center" id="page1">
@@ -83,6 +92,19 @@
     <section id="ingredient-search-results" class="container"></section>
 
     <section id="recipe-modal"></section>
+
+    <section id="about-us">
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="">Make it -or- Order it, Inc. &copy; 2018</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -94,6 +116,8 @@
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <!-- Custom JavaScript -->
     <script src="assets/js/app.js"></script>
+    <!-- Loads Google Maps API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQss1t9x7lNBkYaeGQQCQLZuY-gT6BmSw&libraries=places"></script>
 </body>
 
 </html>
