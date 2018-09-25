@@ -154,6 +154,20 @@ function instructionsBuild(responseObj) {
 
 $("#get-recipes").on("click", function (event) {
     $("#ingredient-search-results").empty();
+    $("#ingredient-search-section").appendTo( "#new-box");
+    $("#ingredient-search-section").css("background-color", "");
+
+    $("#ingredient-search-section").css("margin-bottom", "10px");
+    $("#ingredient-search-section").css("margin-top", "10px");
+    $("#ingredient-search-section").css("padding", "5px");
+    $("#ingredient-search-section").css("width", "500px");
+    $("#ingredient-search-section").css("height", "50px");
+    $("#ingredient-search-section").css("color", "black");
+
+    $("#form-div").css("font-size" , "11px");
+    $("#get-recipes").css("font-size", "11px");
+    $("#box-display").hide();
+    $("#ingredient-search-results").empty();
     var foodInput = $("#ingredient-search-input").val().trim();
     //takes away button default behavior 
     event.preventDefault();
@@ -192,7 +206,5 @@ $("#get-recipes").on("click", function (event) {
     });
 
 });
-
-
 
 
