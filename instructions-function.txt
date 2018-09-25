@@ -1,0 +1,11 @@
+function instructionsBuild(responseArr) {
+    retval = "";
+    for (var i=0; i<responseArr.length; i++) {
+        var instruction = '<p>';
+        instruction += responseArr[i].number + '.) ';
+        instruction += '<span class="recipe-instruction">' + responseArr[i].step + '</span>';
+        instruction += '</p>';
+        retval += instruction;
+    }
+    return retval;
+}

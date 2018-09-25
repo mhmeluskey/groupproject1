@@ -1,3 +1,30 @@
+// ====== GLOBAL VARIABLES ====== //
+// Initial Google Maps settings
+var map;
+var userPos;
+var zipPos;
+var currentLocation;
+var firstCarouselItemSet = false;
+
+// ====== FUNCTIONS ====== //
+
+// Builds recipe card for initial search results
+function buildLocationCard(responseObj) {
+    console.log(responseObj);
+
+    var carouselItem;
+
+    if (firstCarouselItemSet) {
+        carouselItem = $('<div class="carousel-item">')
+    } else {
+        carouselItem = $('<div class="carousel-item active">');
+    }
+
+    carouselItem.append('<h1>'+responseObj.name+'</h1>');
+
+    $("#locations-carousel").append(carouselItem);
+}
+
 function buildRecipeCard(responseObj) {
 
     var recipeContainer = $('<div class="col-sm-6 col-md-4 col-lg-3 mb-lg-5 mb-3">');
@@ -17,9 +44,9 @@ function buildRecipeCard(responseObj) {
 
 }
 
-
-
+// Build URL Query for the second AJAX request
 function createRecipeQuery(responseObj) {
+
     var bulkRecipes = "";
     for (var i = 0; i < responseObj.length; i++) {
         if (i === responseObj.length - 1) {
@@ -33,13 +60,13 @@ function createRecipeQuery(responseObj) {
     return bulkRecipes;
 }
 
-
+// Build the modal for the entire recipe (occurs after the second Spoonacular API call)
 function buildRecipeModal(responseObj) {
 
     for (var i = 0; i < responseObj.length; i++) {
 
-        console.log(responseObj[i]);
-
+        // creates an #id for the modal using the responseObj's id number
+        // this 'recipe-ID' value is the same as the buildRecipeCard()'s "data-target"
         var modalId = "recipe-" + responseObj[i].id;
 
         var recipeModal = '<div class="modal fade bd-example-modal-lg" id="' + modalId + '" tabindex="-1" role="dialog">';
@@ -55,6 +82,19 @@ function buildRecipeModal(responseObj) {
         recipeModal += '<div class="col-sm-4">';
         recipeModal += '<img class="img-fluid d-block" src="' + responseObj[i].image + '">';
         recipeModal += '<div class="ingredients-list">' + ingredientsBuild(responseObj[i].extendedIngredients) + '</div>';
+        recipeModal += '</div>';
+        recipeModal += '<div class="col-sm-8">';
+        recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
+        recipeModal += '</div>';
+        recipeModal += '</div>';
+        recipeModal += '<div class="row my-4">';
+        recipeModal += '<div class="col-sm-12 text-center">';
+        recipeModal += '<button class="btn btn-primary btn-lg" data-nutrition-val="#">Eat it On</button><button class="btn btn-warning btn-lg ml-4">Work It Off</button>'
+        recipeModal += '</div>';
+        recipeModal += '</div>';
+        recipeModal += '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>';
+        recipeModal += '</div>';
+        recipeModal += '</div>';
         recipeModal += '</div>';
         recipeModal += '<div class="col-sm-8">';
         recipeModal += '<p>' + instructionsBuild(responseObj[i]) + '</p>';
@@ -86,21 +126,23 @@ function buildRecipeModal(responseObj) {
 
 }
 
+// After the first AJAX request to Spoonacular, build preview columns with the response
 function displayRecipes(response) {
 
     var display = $('<div class="row">');
 
     for (var i = 0; i < response.length; i++) {
         var singleRecipe = buildRecipeCard(response[i]);
-        console.log(singleRecipe);
+        // console.log(singleRecipe);
         display.append(singleRecipe);
     }
 
-    console.log(display);
+    // console.log(display);
     $("#ingredient-search-results").append(display);
 
 }
 
+// In the Recipe Modal: builds the list of ingredients and their measurements
 function ingredientsBuild(responseArr) {
     retval = "";
     for (var i = 0; i < responseArr.length; i++) {
@@ -119,17 +161,10 @@ function ingredientsBuild(responseArr) {
     return retval;
 }
 
-function instructionsBuild(responseObj) {
-    console.log("instructionsBuild");
-    //--------Display instructions and external source URL
-    console.log(responseObj);
-    console.log(responseObj.sourceUrl);
-    console.log(responseObj.instructions);
-
-
-
+// In the Recipe Modal: builds the list of instructions
+function instructionsBuild(responseArr) {
     retval = "";
-    for (var i = 0; i < responseObj.length; i++) {
+    for (var i = 0; i < responseArr.length; i++) {
         var instruction = '<p>';
         instruction += responseObj[i].number + '.) ';
         instruction += '<span class="recipe-instruction">' + responseObj[i].step + '</span>';
@@ -149,62 +184,226 @@ function instructionsBuild(responseObj) {
 
 }
 
+$(document).ready(function () {
+
+    // Setup 'Lazy Mode' hover tooltip
+    $('#deliveryMode').tooltip({ 'trigger': 'hover', 'title': 'Lazy Mode' });
 
 
+    // Initialize Google Map
+    var mapSettings = {
+        zoom: 3,
+        center: new google.maps.LatLng(35.2259178, -93.2095093),
+        panControl: false,
+    }
 
-$("#get-recipes").on("click", function (event) {
-    $("#ingredient-search-results").empty();
-    $("#ingredient-search-section").appendTo( "#new-box");
-    $("#ingredient-search-section").css("background-color", "");
+    // Load map
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapSettings);
 
-    $("#ingredient-search-section").css("margin-bottom", "10px");
-    $("#ingredient-search-section").css("margin-top", "10px");
-    $("#ingredient-search-section").css("padding", "5px");
-    $("#ingredient-search-section").css("width", "500px");
-    $("#ingredient-search-section").css("height", "50px");
-    $("#ingredient-search-section").css("color", "black");
-
-    $("#form-div").css("font-size" , "11px");
-    $("#get-recipes").css("font-size", "11px");
-    $("#box-display").hide();
-    $("#ingredient-search-results").empty();
-    var foodInput = $("#ingredient-search-input").val().trim();
-    //takes away button default behavior 
-    event.preventDefault();
-    //empty out the value after clicking
-    $("#ingredient-search-input").on("#get-recipes").val("");
-
-    var queryURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + foodInput + "&limitLicense=false&number=12&ranking=1";
-
-    $.ajax({
-
-        url: queryURL,
-        method: "GET",
-        headers: { "Accept": "application/json", "X-Mashape-Key": "ZFmvhX3Np4mshkom23Cm7BKRqwYFp1LChSXjsnKEoMpsW5hD8n" }
-
-    }).then(function (response) {
-
-        displayRecipes(response);
-
-        var bulkRecipes = createRecipeQuery(response);
-        var recipeQuery = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=" + bulkRecipes + "&includeNutrition=false";
-
-        $.ajax({
-
-            url: recipeQuery,
-            method: "GET",
-            headers: { "Accept": 'application/json', "X-Mashape-Key": "ZFmvhX3Np4mshkom23Cm7BKRqwYFp1LChSXjsnKEoMpsW5hD8n" }
-
-        }).then(function (response) {
-            buildRecipeModal(response);
-        });
-
-    }).catch(function (error) {
-
-        console.log(error);
-
+    $("#zipCode").on("click", function () {
+        console.log("zip clicked");
     });
 
+
+    // Zip Code button text input reveal
+    $("#zipCode").on('click', function () {
+        $("#zipCode").toggleClass('checked');
+        $(".main-input").animate({
+            marginBottom: '1rem'
+        });
+        $(".zipSearch-hide").toggle("slow");
+    });
+
+
+    // Current Location button click Event
+    $("#currentLocation").on('click', function () {
+        $("#currentLocation").toggleClass('checked');
+        if (navigator.geolocation) {
+
+            function error(err) {
+                console.log(err.code + " " + err.message);
+            }
+
+            function success(pos) {
+                userPos = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                };
+                console.log(userPos);
+                //   infoWindow.setContent('Location found.');
+                //   infoWindow.open(map);
+                // map.setCenter(userPos);
+                // map.setZoom(8);   
+
+                $("#currentLocation").addClass
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error);
+
+        } else {
+            // Browser doelsn't support Geolocation
+            alert('Geolocation not supported in your browser');
+        }
+    });
+
+    $("#get-recipes").on("click", function (event) {
+
+        //takes away button default behavior 
+        event.preventDefault();
+
+        // get zip value from the text input
+        zipPos = $("#user-zip").val().trim();
+
+        if (userPos || zipPos) {
+
+            // assign food and location input to variable
+            var foodInput = $("#ingredient-search-input").val().trim();
+
+            // if foodInput on the event, not empty, empty out the search results section 
+            // (in prep for incoming results)
+            if (foodInput !== "") {
+                $("#ingredient-search-results").empty();
+            }
+
+            // If the userPos isn't set, get the Latitude and Longitude coordinates from the Zip Input
+            if (zipPos) {
+
+                // build Geocode Query;
+                var geoCodeQuery = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zipPos + '&key=AIzaSyAQss1t9x7lNBkYaeGQQCQLZuY-gT6BmSw';
+
+                console.log(zipPos);
+                console.log(geoCodeQuery);
+
+                $.ajax({
+
+                    url: geoCodeQuery,
+                    method: "GET",
+
+                }).then(function (response) {
+
+                    userPos = {
+                        lat: response.results[0].geometry.location.lat,
+                        lng: response.results[0].geometry.location.lng
+                    }
+
+                    map.setCenter(userPos);
+                    map.setZoom(14);
+
+                    var infoWindow = new google.maps.InfoWindow();
+
+                    var service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch({
+                        location: userPos,
+                        keyword: foodInput,
+                        radius: 1000,
+                        type: "restaurant"
+                    }, callback);
+
+                    function callback(results, status) {
+                        console.log(results);
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (var i = 0; i < results.length; i++) {
+                            createMarker(results[i]);
+                            buildLocationCard(results[i]);
+                            console.log(results[i]);
+                        }
+                        }
+                    }
+                
+                    function createMarker(place) {
+                        var placeLoc = place.geometry.location;
+                        var marker = new google.maps.Marker({ map: map, position: placeLoc});
+
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infoWindow.setContent(place.name);
+                            infoWindow.open(map, this);
+                        });
+                    }
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            } else if (userPos) {
+
+                // Set Center and Zoom Levels to location input
+                map.setCenter(userPos);
+                map.setZoom(14);
+
+
+                // Initialize infowindows for Places
+                var infoWindow = new google.maps.InfoWindow();
+
+
+                // Create Places Services Layer with user's position and food keyword, place markers on response
+                var service = new google.maps.places.PlacesService(map);
+                service.nearbySearch({
+                    location: userPos,
+                    keyword: foodInput,
+                    radius: 1000,
+                    type: "restaurant"
+                }, callback);
+
+                
+                function callback(results, status) {
+                    console.log(results);
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                      for (var i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                        console.log(results[i]);
+                      }
+                    }
+                  }
+            
+                function createMarker(place) {
+                    var placeLoc = place.geometry.location;
+                    var marker = new google.maps.Marker({ map: map, position: placeLoc});
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        infoWindow.setContent(place.name);
+                        infoWindow.open(map, this);
+                    });
+                }
+
+            }
+
+
+            // Spoonacular Recipes API Call
+            var spoonQueryURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + foodInput + "&limitLicense=false&number=12&ranking=1";
+            $.ajax({
+
+                url: spoonQueryURL,
+                method: "GET",
+                headers: { "Accept": "application/json", "X-Mashape-Key": "ZFmvhX3Np4mshkom23Cm7BKRqwYFp1LChSXjsnKEoMpsW5hD8n" }
+
+            }).then(function (response) {
+
+                displayRecipes(response);
+
+                var bulkRecipes = createRecipeQuery(response);
+                var recipeQuery = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=" + bulkRecipes + "&includeNutrition=false";
+
+                $.ajax({
+
+                    url: recipeQuery,
+                    method: "GET",
+                    headers: { "Accept": 'application/json', "X-Mashape-Key": "ZFmvhX3Np4mshkom23Cm7BKRqwYFp1LChSXjsnKEoMpsW5hD8n" }
+
+                }).then(function (response) {
+
+                    buildRecipeModal(response);
+
+                });
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+
+        }
+
+    });
 });
 
 
