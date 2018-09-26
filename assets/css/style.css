@@ -126,34 +126,54 @@ footer p {
 
 
 
-
 /* Nebi Code */
 
 .btn-primary {
-    color: #f7f5f1;
+    color           : #f7f5f1;
     background-color: #2B93D9;
-    border-color: #2B93D9;
+    border-color    : #2B93D9;
 }
 
 .btn-primary:hover {
     background-color: #aa310c;
-    border-color: #aa310c;
+    border-color    : #aa310c;
 }
 
 .btn-warning {
-    color: #f7f5f1;
+    color           : #f7f5f1;
     background-color: #aa310c;
-    border-color: #aa310c;
+    border-color    : #aa310c;
+}
+
+/* Page 2: Our Developer Team */
+p {
+    text-align   : center;
+    color        : black;
+    font-weight  : bold;
+    font-size    : 1.2em;
+    margin-bottom: 30px;
+}
+h3 {
+    text-align   : center;
+    color        : black;
+    font-weight  : bold;
+    font-size    : 50px;
+    margin-bottom: 2%;
+}
+.carousel {
+    background: rgba(255, 255, 255, 0);
+    width     : 800px;
+    margin    : 1% auto 0 auto;
 }
 
 .carousel-control-prev-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M4 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-    color: black;
+    color           : black;
 }
 
 .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-    color: black;
+    color           : black;
 }
 
 .carousel-indicators li{
@@ -164,8 +184,67 @@ footer p {
     background-color: black;
 }
 
-.locall_team_photos {
+.dev_team_photo {
     width        : 200px;
     height       : 200px;
     margin-bottom: 5%;
+    margin-left: 35%;
 }
+p {
+    font-size    : 1.2em;
+    font-weight  : bold;
+    margin-bottom: 30px;
+    color        : black;
+}
+h6 {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size  : 5em;
+    font-weight: normal;
+    text-align : center;
+    margin     : 1% 0;
+    padding    : 0;
+
+    -webkit-animation-name    : rainbow;
+    -webkit-animation-duration: 6s;
+    animation-name            : rainbow;
+    animation-duration        : 6s;
+    animation-iteration-count : infinite;
+}
+
+@keyframes rainbow {
+    0%   { color: #97E649; }
+    20%  { color: #35fec8; }
+    36%  { color: #35a9fe; }
+    50%  { color: #e135fe; }
+    70%  { color: #FE6C52; }
+    85%  { color: #F4EE44; }
+    100% { color: #97E649; }
+} 
+
+
+
+
+
+
+
+    /* Mobile */
+    @media screen and (max-width: 320px) {
+        h1 {
+            font-size: 0.7rem;
+        }
+        .px-5 {
+            padding-right: 0;
+            padding-left: 0;
+            margin: 0;
+        }
+        h5, h5 {
+            font-size: .8rem;
+        }
+        #ingredient-search-section {
+            background-color: rgba(247, 245, 241, .75);
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 80px;
+            border-radius: 10px;
+        }
+    }
