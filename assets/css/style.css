@@ -125,8 +125,7 @@ footer p {
 
 
 
-
-/* Nebi Code */
+/* About Us Styling */
 
 .btn-primary {
     color           : #f7f5f1;
@@ -196,7 +195,7 @@ p {
     margin-bottom: 30px;
     color        : black;
 }
-h6 {
+/* h6 {
     font-family: 'Trebuchet MS', sans-serif;
     font-size  : 5em;
     font-weight: normal;
@@ -209,9 +208,9 @@ h6 {
     animation-name            : rainbow;
     animation-duration        : 6s;
     animation-iteration-count : infinite;
-}
+} */
 
-@keyframes rainbow {
+/* @keyframes rainbow {
     0%   { color: #97E649; }
     20%  { color: #35fec8; }
     36%  { color: #35a9fe; }
@@ -219,10 +218,7 @@ h6 {
     70%  { color: #FE6C52; }
     85%  { color: #F4EE44; }
     100% { color: #97E649; }
-} 
-
-
-
+}  */
 
 
 
