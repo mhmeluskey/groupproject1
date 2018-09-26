@@ -63,6 +63,8 @@ function createRecipeQuery(responseObj) {
 // Build the modal for the entire recipe (occurs after the second Spoonacular API call)
 function buildRecipeModal(responseObj) {
 
+    console.log(responseObj);
+
     for (var i = 0; i < responseObj.length; i++) {
 
         // creates an #id for the modal using the responseObj's id number
@@ -97,7 +99,7 @@ function buildRecipeModal(responseObj) {
         recipeModal += '</div>';
         recipeModal += '</div>';
         recipeModal += '<div class="col-sm-8">';
-        recipeModal += '<p>' + instructionsBuild(responseObj[i]) + '</p>';
+        recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
 
 
         recipeModal += '</div>';
@@ -116,6 +118,8 @@ function buildRecipeModal(responseObj) {
         recipeModal += '</div>';
         recipeModal += '</div>';
         recipeModal += '</div>';
+
+        console.log("here");
        
 
         $("#recipe-modal").append(recipeModal);
@@ -256,6 +260,28 @@ $(document).ready(function () {
 
         if (userPos || zipPos) {
 
+            $("#ingredient-search-section").animate({
+                marginTop: "66px",
+                marginBottom: "10px",
+                paddingTop: "20px",
+                paddingBottom: "20px"
+            }, 1000);
+
+            $(".search-text").toggle("slow");
+            $(".zipSearch-hide").animate({
+                marginBottom: "16px"
+            })
+
+            $("#load-more").toggle("slow");
+            // $("#ingredient-search-section").animate("margin-bottom", "10px");
+            // $("#ingredient-search-section").animate("padding", "5px");
+            // $("#ingredient-search-section").css("width", "500px");
+            // $("#ingredient-search-section").css("height", "50px");
+            // $("#ingredient-search-section").css("color", "black");
+            // $("#form-div").css("font-size" , "11px");
+            // $("#get-recipes").css("font-size", "11px");
+            // $("#box-display").hide();
+
             // assign food and location input to variable
             var foodInput = $("#ingredient-search-input").val().trim();
 
@@ -351,7 +377,6 @@ $(document).ready(function () {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                       for (var i = 0; i < results.length; i++) {
                         createMarker(results[i]);
-                        console.log(results[i]);
                       }
                     }
                   }
