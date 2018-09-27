@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!-- Loads Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQss1t9x7lNBkYaeGQQCQLZuY-gT6BmSw&libraries=places"></script>
+
 </head>
 
 <body>
@@ -77,10 +80,11 @@
                         </div>
                     </div>
                 </form>
-
-                <h6 class="mb-3">Let us know what you feel like eating and we'll show you some great recipes.</h6>
-                <h6 class="mb-3">Or, if you're not in the mood to cook, we'll show you some nearby restaurants that might be able to help you out.</h6>
-                <h6>Use the Lazy Mode checkbox, to get super simple recipes and restaurant's with delivery options.</h6>
+                <div class="search-text">
+                    <h6 class="mb-3">Let us know what you feel like eating and we'll show you some great recipes.</h6>
+                    <h6 class="mb-3">Or, if you're not in the mood to cook, we'll show you some nearby restaurants that might be able to help you out.</h6>
+                    <h6>Use the Lazy Mode checkbox, to get super simple recipes and restaurant's with delivery options.</h6>
+                </div>
             </div>
             <div class="col-md-6">
                 <div id="map-canvas"></div>
@@ -103,6 +107,7 @@
                     </div>
                 </div>
             </div>
+            <a href="#" id="load-more" class="btn btn-primary d-none">Load More</a>
         </div>
     </section> -->
 
@@ -131,8 +136,6 @@
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <!-- Custom JavaScript -->
     <script src="assets/js/app.js"></script>
-    <!-- Loads Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQss1t9x7lNBkYaeGQQCQLZuY-gT6BmSw&libraries=places"></script>
 </body>
 
 </html>
