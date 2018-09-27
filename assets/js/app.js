@@ -96,16 +96,16 @@ function buildRecipeModal(responseObj) {
         recipeModal += '</p>';
         recipeModal += '</div>';
         recipeModal += '</div>';
-        recipeModal += '<div class="row my-4">';
-        recipeModal += '<div class="col-sm-12 text-center">';
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-        recipeModal += '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>';
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-        recipeModal += '<div class="col-sm-8">';
-        recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
+        // recipeModal += '<div class="row my-4">';
+        // recipeModal += '<div class="col-sm-12 text-center">';
+        // recipeModal += '</div>';
+        // recipeModal += '</div>';
+        // recipeModal += '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>';
+        // recipeModal += '</div>';
+        // recipeModal += '</div>';
+        // recipeModal += '</div>';
+        // recipeModal += '<div class="col-sm-8">';
+        // recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
 
 $("#recipe-modal").append(recipeModal);
 
