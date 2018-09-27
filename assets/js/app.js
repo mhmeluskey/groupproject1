@@ -62,6 +62,7 @@ function createRecipeQuery(responseObj) {
 
 // Build the modal for the entire recipe (occurs after the second Spoonacular API call)
 function buildRecipeModal(responseObj) {
+    console.log(responseObj);
 
     console.log(responseObj);
 
@@ -86,12 +87,17 @@ function buildRecipeModal(responseObj) {
         recipeModal += '<div class="ingredients-list">' + ingredientsBuild(responseObj[i].extendedIngredients) + '</div>';
         recipeModal += '</div>';
         recipeModal += '<div class="col-sm-8">';
-        recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
+        recipeModal += '<p>';
+        if (responseObj[i].analyzedInstructions.length > 0) {
+            recipeModal += instructionsBuild(responseObj[i].analyzedInstructions[0].steps);
+         } else {
+             recipeModal += '<div class="btn-container"><a href="'+responseObj[i].sourceUrl+'" target="_blank" class="btn btn-primary btn-lg">See Instructions</a></div>';
+         }
+        recipeModal += '</p>';
         recipeModal += '</div>';
         recipeModal += '</div>';
         recipeModal += '<div class="row my-4">';
         recipeModal += '<div class="col-sm-12 text-center">';
-        recipeModal += '<button class="btn btn-primary btn-lg" data-nutrition-val="#">Eat it On</button><button class="btn btn-warning btn-lg ml-4">Work It Off</button>'
         recipeModal += '</div>';
         recipeModal += '</div>';
         recipeModal += '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>';
@@ -101,28 +107,7 @@ function buildRecipeModal(responseObj) {
         recipeModal += '<div class="col-sm-8">';
         recipeModal += '<p>' + instructionsBuild(responseObj[i].analyzedInstructions[0].steps) + '</p>';
 
-
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-        recipeModal += '<div class="row my-4">';
-        recipeModal += '<div class="col-sm-12 text-center">';
-        // New Button
-        recipeModal += '<a href="' + responseObj[i].sourceUrl + '"target="_blank" class="btn btn-primary btn-lg" role="button" aria-disabled="false">See Instructions</a>'
-        //
-        /* CLEARING OUT THESE BUTTONS FOR CLARITY 
-                                      recipeModal += '<button class="btn btn-primary btn-lg" data-nutrition-val="#">Eat it On</button><button class="btn btn-warning btn-lg ml-4">Work It Off</button>'
-                              recipeModal += '</div>';
-                          recipeModal += '</div>';
-                          CLEARING OUT BUTTONS FOR CLARITY*/
-        recipeModal += '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>';
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-        recipeModal += '</div>';
-
-        console.log("here");
-       
-
-        $("#recipe-modal").append(recipeModal);
+$("#recipe-modal").append(recipeModal);
 
     }
 
@@ -167,24 +152,16 @@ function ingredientsBuild(responseArr) {
 
 // In the Recipe Modal: builds the list of instructions
 function instructionsBuild(responseArr) {
+    console.log(responseArr);
     retval = "";
     for (var i = 0; i < responseArr.length; i++) {
         var instruction = '<p>';
-        instruction += responseObj[i].number + '.) ';
-        instruction += '<span class="recipe-instruction">' + responseObj[i].step + '</span>';
+        instruction += responseArr[i].number + '.) ';
+        instruction += '<span class="recipe-instruction">' + responseArr[i].step + '</span>';
         instruction += '</p>';
         retval += instruction;
-
-
-/*
-        $("#external").on("click", function(){
-            alert("hit");
-        });
-*/
     }
     return retval;
-
-
 
 }
 
@@ -326,13 +303,11 @@ $(document).ready(function () {
                     }, callback);
 
                     function callback(results, status) {
-                        console.log(results);
                         if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        for (var i = 0; i < results.length; i++) {
-                            createMarker(results[i]);
-                            buildLocationCard(results[i]);
-                            console.log(results[i]);
-                        }
+                            for (var i = 0; i < results.length; i++) {
+                                createMarker(results[i]);
+                                buildLocationCard(results[i]);
+                            }
                         }
                     }
                 
@@ -367,13 +342,12 @@ $(document).ready(function () {
                 service.nearbySearch({
                     location: userPos,
                     keyword: foodInput,
-                    radius: 1000,
+                    radius: 5000,
                     type: "restaurant"
                 }, callback);
 
                 
                 function callback(results, status) {
-                    console.log(results);
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                       for (var i = 0; i < results.length; i++) {
                         createMarker(results[i]);
@@ -396,6 +370,7 @@ $(document).ready(function () {
 
             // Spoonacular Recipes API Call
             var spoonQueryURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + foodInput + "&limitLicense=false&number=12&ranking=1";
+            
             $.ajax({
 
                 url: spoonQueryURL,
